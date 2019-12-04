@@ -6,11 +6,19 @@ import static org.junit.Assert.*;
 public class ParsingKMLTest {
 
     ParsingKML parsingKML = new ParsingKML();
+    String filePath = "E:\\SuperMapData\\test\\testBim";
+    String saveFilePath = "E:\\SuperMapData\\test\\saveTest";
 
     @Test
-    public void testKML(){
-        String record = parsingKML.readFile("model002", "E:\\SuperMapData\\test\\testBim", "E:\\SuperMapData\\test\\saveTest");
-        System.out.println(record);
+    public void testParsingKmlToModifyS3mFileName(){
+        String s = parsingKML.parsingKmlToModifyS3mFileName(filePath, saveFilePath);
+        System.out.println(s);
+    }
+
+    @Test
+    public void testReadS3m(){
+        JSONArray jsonArray = parsingKML.readS3m("model002", saveFilePath);
+        System.out.println(jsonArray);
     }
 
 }

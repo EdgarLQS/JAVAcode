@@ -15,15 +15,14 @@ public class Test_HDFS {
     public void upload() throws Exception {
 
         // 本地路径和上传路径----------（需要将数据变为流的形式进行上传）
-        String localpath = "E:\\DemoRecording\\File_storage\\JerseyTest\\test1.jpg";
-        String destpath = "hdfs://192.168.40.151:9000/user/bcgis/testgg.jpg";
+        String localpath = "E:\\SuperMapData\\test1.txt";
+        String destpath = "hdfs://172.16.15.65:9000/user/bcgis/test.jpg";
         Path dst = new Path(destpath);
         FSDataOutputStream os = fs.create(dst);
         FileInputStream is = new FileInputStream(localpath);
         IOUtils.copy(is, os);
 //        // 上传文件，封装好的写法  这个写法适合在本地路径下直接上传
 //        fs.copyFromLocalFile(new Path(localpath),new Path(destpath));
-
     }
 
     // 从hdfs中复制文件到本地文件系统
