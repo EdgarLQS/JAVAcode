@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 import static java.lang.Math.abs;
 
 /**
@@ -11,8 +14,12 @@ public class Dijkstra {
         int n = weight.length; // 顶点个数
         int[] shortPath = new int[n]; // 保存start到其他各点的最短路径
         String[] path = new String[n]; // 保存start到其他各点最短路径的字符串表示
-        for (int i = 0; i < n; i++)
+
+        String[] newPath = new String[n];
+        for (int i = 0; i < n; i++) {
             path[i] = new String(start + "-->" + i);
+            newPath[i] = new String(start + "," + i);
+        }
         int[] visited = new int[n]; // 标记当前该顶点的最短路径是否已经求出,1表示已求出
 
         // 初始化，第一个顶点已经求出
@@ -37,50 +44,27 @@ public class Dijkstra {
                 if (visited[i] == 0 && weight[start][k] + weight[k][i] < weight[start][i]) {
                     weight[start][i] = weight[start][k] + weight[k][i];
                     path[i] = path[k] + "-->" + i;
+//                    pathList[i][1] = start;
+                    newPath[i] = newPath[k] + "," + i;
                 }
             }
         }
 
-        // TODO 计算出最短路径  path[i] 中即是最短路径的走法
+        // TODO 计算出最短路径  path[i] 中即是最短路径的走法  主要是返回路径
         for (int i = 0; i < n; i++) {
             System.out.println("从" + start + "出发到" + i + "的最短路径为：" + path[i]);
         }
+        // TODO 后期如果需要维护，可以从这里开始  这里面其实包含了全部的路径信息
+//        for(int i = 0; i < n; i++){
+//            System.out.println(newPath[i]);
+//        }
+
         System.out.println("=====================================");
         return shortPath;
     }
 
-//    public static final int M = 10000; // 代表正无穷
-    //案例演示
-//    public static void main(String[] args) {
-//        // 二维数组每一行分别是 A、B、C、D、E 各点到其余点的距离,
-//        // A -> A 距离为0, 常量M 为正无穷
-//        int[][] weight1 = {
-//                {0, 1, 7, M, 6, M },
-//                {1, 0, M, 3, M, M },
-//                {7, M, 0, 2, M, 1 },
-//                {M, 3, 2, 0, M, M },
-//                {6, M, M, M, 0, 2 },
-//                {M, M, 1, M, 2, 0 }
-//        };
-//
-//        int start = 0;
-//        int[] shortPath = dijkstra(weight1, start);
-//        for (int i = 0; i < shortPath.length; i++) {
-//            System.out.println("从" + start + "出发到" + i + "的最短距离为：" + shortPath[i]);
-//        }
-//    }
-
     // 根据 二维数组生成权重矩阵
     public int[][] creatWeightMatrix(int[][] data){
-
-        int[][] data1 = {
-                {1, 1, 1, 1, 1 },
-                {1, 1, 99, 1, 1 },
-                {1, 1, 1, 99, 1 },
-                {1, 1, 1, 1, 1 }
-        };
-
-
 
         int row = data.length;
         int column = data[0].length;
@@ -112,13 +96,14 @@ public class Dijkstra {
             }
 //            System.out.println();
         }
+
         //打印生成的权重矩阵
-        for(int i = 0; i < matrixDimension; i++){
-            for(int j = 0; j < matrixDimension; j++){
-                System.out.print(weightMatrix[i][j] + ", ");
-            }
-            System.out.println();
-        }
+//        for(int i = 0; i < matrixDimension; i++){
+//            for(int j = 0; j < matrixDimension; j++){
+//                System.out.print(weightMatrix[i][j] + ", ");
+//            }
+//            System.out.println();
+//        }
         return weightMatrix;
     }
 }
